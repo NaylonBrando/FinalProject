@@ -10,7 +10,7 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             ProductManager productManager = new ProductManager(new InMemoryProductDal());
-
+            //Bu bir yorum satırıdır
             foreach (var product in productManager.GetAll())
             {
                 Console.WriteLine(product.ProductName);
