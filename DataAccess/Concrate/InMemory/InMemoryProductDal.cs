@@ -54,7 +54,7 @@ namespace DataAccess.Concrate.InMemory
             //p nin dolastigi elemanlarin id'lerinden biri product parametresinin id'sine eşit ise ;
             // productToDelete'e eslesilen p elemanının referans adresini ver.
 
-
+            _products.Remove(productToDelete);
 
 
         }
