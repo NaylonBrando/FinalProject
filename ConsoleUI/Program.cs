@@ -2,6 +2,7 @@
 using DataAccess.Concrate.EntityFramework;
 using DataAccess.Concrate.InMemory;
 using System;
+using System.IO;
 
 namespace ConsoleUI
 {
@@ -30,6 +31,8 @@ namespace ConsoleUI
             {
                 Console.WriteLine(product.ProductName + " " + product.UnitPrice);
             }
+
+            
         }
     }
 }
