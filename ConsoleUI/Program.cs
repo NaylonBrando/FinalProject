@@ -1,16 +1,14 @@
 ﻿using Business.Concrate;
 using DataAccess.Concrate.EntityFramework;
-using DataAccess.Concrate.InMemory;
 using System;
-using System.IO;
 
 namespace ConsoleUI
 {
-    class Program
+    internal class Program
     {
         //SOLID
         //Open Closed Principle
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             ProductManager productManager = new ProductManager(new EfProductDal());
 
@@ -22,17 +20,15 @@ namespace ConsoleUI
 
             foreach (var product in productManager.GetAllByCategoryId(2))
             {
-                Console.WriteLine(product.ProductName + " "+ product.CategoryId);
+                Console.WriteLine(product.ProductName + " " + product.CategoryId);
             }
 
             Console.WriteLine("-------------------------------------");
 
-            foreach (var product in productManager.GetByUnitPrice(20,100))
+            foreach (var product in productManager.GetByUnitPrice(20, 100))
             {
                 Console.WriteLine(product.ProductName + " " + product.UnitPrice);
             }
-
-            
         }
     }
 }

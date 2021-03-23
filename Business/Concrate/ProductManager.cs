@@ -1,15 +1,13 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrate;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Business.Concrate
 {
     public class ProductManager : IProductService
     {
-        IProductDal _productDal;
+        private IProductDal _productDal;
 
         public ProductManager(IProductDal productDal) //IProductDal sayesinde dataaccess'teki EfProductDal ve InMemoryProduct dal a erişebiliyoruz.
         {
@@ -25,7 +23,7 @@ namespace Business.Concrate
 
         public List<Product> GetAllByCategoryId(int id)
         {
-            return _productDal.GetAll(p => p.CategoryId == id); 
+            return _productDal.GetAll(p => p.CategoryId == id);
         }
 
         public List<Product> GetByUnitPrice(decimal min, decimal max)

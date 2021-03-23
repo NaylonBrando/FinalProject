@@ -12,7 +12,7 @@ namespace DataAccess.Concrate.EntityFramework
     {
         public void Add(Product entity)
         {
-            using (NorthwindContext context= new NorthwindContext())
+            using (NorthwindContext context = new NorthwindContext())
             {
                 //Git, verikaynagindan gönderdigim productu bir tane nesneye ekle
                 //Referansi yakala
@@ -27,7 +27,7 @@ namespace DataAccess.Concrate.EntityFramework
         public void Delete(Product entity)
         {
             using (NorthwindContext context = new NorthwindContext())
-            {             
+            {
                 var deletedEntity = context.Entry(entity);
                 deletedEntity.State = EntityState.Deleted;
                 context.SaveChanges();

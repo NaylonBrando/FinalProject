@@ -4,15 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace DataAccess.Concrate.InMemory
 {
-    
-    public class InMemoryProductDal : IProductDal 
+    public class InMemoryProductDal : IProductDal
     {
         //Bu list, bellekte sanki veri varmis da onu simule edecegiz diye kodlanmistir.
-        List<Product> _products; //Global degisken(olusturuldugu classa göre). Bu siniftaki bütün metodlar bu degiskene erisebilir.
+        private List<Product> _products; //Global degisken(olusturuldugu classa göre). Bu siniftaki bütün metodlar bu degiskene erisebilir.
+
         //Global degiskenlerin isimleri "_" ile baslar.
 
         public InMemoryProductDal()
@@ -27,6 +26,7 @@ namespace DataAccess.Concrate.InMemory
                 //Her product'un referans adresi farklidir.
             };
         }
+
         public void Add(Product product)
         {
             _products.Add(product);
@@ -37,7 +37,7 @@ namespace DataAccess.Concrate.InMemory
             //Peki ürünleri silmek için bizim neye ihtiyacimiz var ? Ürünler her newlendiğinde
             //referans idsi farklı olacagindan, bizim ürünleri id'sine göre silmemiz gerekir.
             //Bunun icinde listeyi tek tek dolasmamiz lazim.
-            Product productToDelete=null; //silinecek productun referansını tutan class.
+            Product productToDelete = null; //silinecek productun referansını tutan class.
             //1. Yöntem
             //foreach (var p in _products)
             //{
@@ -45,19 +45,17 @@ namespace DataAccess.Concrate.InMemory
             //    {
             //        productToDelete = p;
             //    }
-            //}       
+            //}
             //_products.Remove(productToDelete);
 
             //2. Yöntem
             //LINQ - Language İntegrated Language. Link ile liste bazlı yapıları sql ile filtreleyebiliriz.
-            productToDelete = _products.SingleOrDefault(p=>p.ProductId==product.ProductId); //singleordefault tek bir eleman bulmaya yarar. producsu tek tek dolasır.
+            productToDelete = _products.SingleOrDefault(p => p.ProductId == product.ProductId); //singleordefault tek bir eleman bulmaya yarar. producsu tek tek dolasır.
             //p=> Lambda nedir. Parametrenin icindeki p, foreach döngüsündeki item ile degisken tutmanin mantiginda.
             //p nin dolastigi elemanlarin id'lerinden biri product parametresinin id'sine eşit ise ;
             // productToDelete'e eslesilen p elemanının referans adresini ver.
 
             _products.Remove(productToDelete);
-
-
         }
 
         public Product Get(Expression<Func<Product, bool>> filter)
