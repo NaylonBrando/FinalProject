@@ -29,6 +29,15 @@ namespace ConsoleUI
             {
                 Console.WriteLine(product.ProductName + " " + product.UnitPrice);
             }
+
+            Console.WriteLine("-------------------------------------");
+
+            WorkerManager workerManager = new WorkerManager(new EfWorkerDal());
+
+            foreach (var worker in workerManager.GetAll())
+            {
+                Console.WriteLine(worker.Id + " " + worker.Name + " " + worker.Surname);
+            }
         }
     }
 }

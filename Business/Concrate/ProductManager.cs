@@ -7,10 +7,13 @@ namespace Business.Concrate
 {
     public class ProductManager : IProductService
     {
+        //IProductDal sayesinde dataaccess'teki EfProductDal ve InMemoryProductDal'a erişebiliyoruz.
+        //Yani hangisini parametre olarak girersek DataAccess'teki o teknolojinin nesnesi olup, o metodları kullanabilecek.
+        //Bussiness sınıfı bir nevi dolaylı yoldan DataAccess sınıfını kullanacak, kendiside DataAccess'ten farklı olarak burada kurallar koyarak DataAccess'i kullanacak.
         private IProductDal _productDal;
-
-        public ProductManager(IProductDal productDal) //IProductDal sayesinde dataaccess'teki EfProductDal ve InMemoryProduct dal a erişebiliyoruz.
-        {
+        
+        public ProductManager(IProductDal productDal) 
+        {                                             
             _productDal = productDal;
         }
 

@@ -1,4 +1,5 @@
-﻿using Entities.Concrate;
+﻿using Core.DataAccees;
+using Entities.Concrate;
 
 namespace DataAccess.Abstract
 {
@@ -15,4 +16,4 @@ namespace DataAccess.Abstract
         //void Update(Product product);
         //List<Product> GetAllByCategory(int categoryId);
     }
-}
+}   //Code Refactoring

@@ -17,5 +17,20 @@ namespace DataAccess.Concrate.EntityFramework
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        //public DbSet<Worker> Workers { get; set; }
+
+        //Custom Mapping
+        //Yukarıdaki gibi nesnelerimizi veritabanı tablolarına karsılık getirirken, veritabanı tablo ve alan adlarına dikkat ediyoruz.
+        //Bu zorunlu mu ? Tabi ki degil. Yani Personel varlıgımızı illa veritabanındaki Employees ismiyle degistirmemize gerek yok. Hatta sütun isimlerine bile adapte etmeye gerek yok!
+        //Bunu OnModelCreating metoduyla çözüyoruz.
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Worker>().ToTable("Employees");
+            modelBuilder.Entity<Worker>().Property(p => p.Id).HasColumnName("EmployeeID");
+            modelBuilder.Entity<Worker>().Property(p => p.Name).HasColumnName("FirstName");
+            modelBuilder.Entity<Worker>().Property(p => p.Surname).HasColumnName("LastName");
+
+        }
+
     }
 }
