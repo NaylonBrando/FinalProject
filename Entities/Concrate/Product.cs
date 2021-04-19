@@ -3,6 +3,7 @@
 namespace Entities.Concrate
 {
     //Diger katmanlarinda kontrol etmesi için public ekledik.
+    //Veritabanı tablolarımızı bu nesnelerle ilişkilendiriyoruz
     public class Product : IEntity
     {
         public int ProductId { get; set; }

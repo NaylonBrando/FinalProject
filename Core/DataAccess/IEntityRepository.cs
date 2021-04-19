@@ -2,8 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Text;
 
-namespace Core.DataAccees
+namespace Core.DataAccess
 {
     //1:
     //Her entity için .....Dal yazıp, o dal için ayrı ayrı kod yazmaktansa
@@ -21,18 +22,19 @@ namespace Core.DataAccees
 
     //3:
     //Bütün projelerde kullanabilmek için Core katmanına taşıdık. Artık evrensel bir şablon
+    //Artık herhangi bir proje nesneleri için lazım olan şablon interfaceleri buradan şablon alabilir 
 
     //4:
-    //Core katmanı diğer katmanları referans almaz! Alırsa diğer katmanlara bağımlısındır. Hatta Diğer projelere
+    //Core katmanı, diğer katmanları referans almaz! Alırsa diğer katmanlara bağımlısındır. Hatta Diğer projelere
     public interface IEntityRepository<T> where T : class, IEntity, new()
     {
         List<T> GetAll(Expression<Func<T, bool>> filter = null); //Data'yi filreleyip getimek için kullaniyoruz.
 
-                                                                 //Bununla kategoriye göre getir, ürüne göre getir vs için ayri ayri kodlar yazmak yerine tek şablonla çözeceksin
-                                                                 //"Expression<Func<T, bool>> filter=null" <-- Bunu linqdaki gibi verileri getirme olarak düşünebilirsin
-                                                                 //c=>c.CategoryId ==2 gibi
-                                                                 //Veya sqldeki where şartları gibi
-                                                                 //Filter yazmak zorunlu. filter=null filtre vermeye bilirsin demek. Filtre yoksa tüm datayi istiyor.
+        //Bununla kategoriye göre getir, ürüne göre getir vs için ayri ayri kodlar yazmak yerine tek şablonla çözeceksin
+        //"Expression<Func<T, bool>> filter=null" <-- Bunu linqdaki gibi verileri getirme olarak düşünebilirsin
+        //c=>c.CategoryId ==2 gibi
+        //Veya sqldeki where şartları gibi
+        //Filter yazmak zorunlu. filter=null filtre vermeye bilirsin demek. Filtre yoksa tüm datayi istiyor.
 
         //Get, tek bir data getirmek için, bir sistemde detaya gitmek için kullanilir.
         T Get(Expression<Func<T, bool>> filter);

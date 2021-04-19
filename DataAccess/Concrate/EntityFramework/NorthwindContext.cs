@@ -7,17 +7,20 @@ namespace DataAccess.Concrate.EntityFramework
     public class NorthwindContext : DbContext
     {
         //Bu metod projenin hangi veritabani ile ilişkilendirecegimiz yer
+        //Product nesnemi veritabanindaki Products ile bağla
+        //Peki neden tablo sütun isimlerini belirtmedik ? Onları nesnemizin özelliklerinin 
+        //isimlerini tablo sütun isimleriyle aynı yaparak entitiyframework ile hallettik.
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Northwind;Trusted_Connection=true");
         }
 
         //Nesneleri birbirine karşlılık getiriyoruz
-        public DbSet<Product> Products { get; set; } //Product nesnemi veritabanindaki Products ile bağla
-
+        public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Customer> Customers { get; set; }
         //public DbSet<Worker> Workers { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
         //Custom Mapping
         //Yukarıdaki gibi nesnelerimizi veritabanı tablolarına karsılık getirirken, veritabanı tablo ve alan adlarına dikkat ediyoruz.
@@ -32,5 +35,6 @@ namespace DataAccess.Concrate.EntityFramework
 
         }
 
+        
     }
 }

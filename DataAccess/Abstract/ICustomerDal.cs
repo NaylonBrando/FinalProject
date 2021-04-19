@@ -1,4 +1,6 @@
-﻿using Core.DataAccees;
+﻿
+using Core.DataAccess;
+using Core.DataAccess.EntityFramework;
 using Entities.Concrate;
 
 namespace DataAccess.Abstract
