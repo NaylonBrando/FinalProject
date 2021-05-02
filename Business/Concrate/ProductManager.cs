@@ -1,7 +1,10 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrate;
 using Entities.DTOs;
+using System;
 using System.Collections.Generic;
 
 namespace Business.Concrate
@@ -19,26 +22,57 @@ namespace Business.Concrate
             _productDal = productDal;
         }
 
-        public List<Product> GetAll()
+        public IResult Add(Product product) //IResult kendisini implement eden Result' döndürür
         {
             //İs kodları
             //Yetkisi var mi?
-            return _productDal.GetAll();
+            //İşlem gerçekleşti veya gerçekleşmedi ise ben ona göre ekledim veya eklemedim diyeyim.
+            //Result metodlari ile crud operasyonlarının tek şey döndürmesinden bağımsız birden fazla değerler
+            //döndürürür resutlar sayesinde.
+            if (product.ProductName.Length < 2)
+            {
+                //Magic strings
+                return new ErrorResult(Messages.ProductNameInvalid);
+            }
+            _productDal.Add(product);
+            return new SuccessResult(Messages.ProductAdded); //Interface'nin kendisini implemente eden sınıfların referansını tutması.
         }
 
-        public List<Product> GetAllByCategoryId(int id)
+        public IDataResult<List<Product>> GetAll() //Hem product list hem bool hem de mesaj döndürüyor
+        {                                          //İç içe list yapısı varmış
+            //İs kodları
+            //Yetkisi var mi?
+            if (DateTime.Now.Hour == 22)
+            {
+                return new ErrorDataResult<List<Product>>(Messages.MaintanceTime);
+                //Peki data null oldugu halde niye ürün listesini döndürdüm.
+                //Çünkü front endçi bunu ona göre karşılıyacak, kodlarını ona göre yazacak.
+            }
+        
+
+            return new SuccessDataResult<List<Product>>(_productDal.GetAll(),Messages.ProductListed);
+
+
+        }
+        public IDataResult<List<Product>> GetAllByCategoryId(int id)
         {
-            return _productDal.GetAll(p => p.CategoryId == id);
+            return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.CategoryId == id));
         }
 
-        public List<Product> GetByUnitPrice(decimal min, decimal max)
+        public IDataResult<Product> GetById(int id)
         {
-            return _productDal.GetAll(p => p.UnitPrice >= min && p.UnitPrice <= max);
+            return new SuccessDataResult<Product>(_productDal.Get(p => p.ProductId == id));
         }
 
-        public List<ProductDetailDto> GetProductDetails()
+        public IDataResult<List<Product>> GetByUnitPrice(decimal min, decimal max)
         {
-            return _productDal.GetProductDetails();
+            return new SuccessDataResult<List<Product>>
+                (_productDal.GetAll(p => p.UnitPrice >= min && p.UnitPrice <= max));
+        }
+
+        public IDataResult<List<ProductDetailDto>> GetProductDetails()
+        {
+            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails());
         }
     }
 }
