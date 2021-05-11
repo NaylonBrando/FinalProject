@@ -1,5 +1,6 @@
 ﻿using Business.Concrate;
 using DataAccess.Concrate.EntityFramework;
+using Entities.Concrate;
 using System;
 
 namespace ConsoleUI
@@ -12,63 +13,36 @@ namespace ConsoleUI
         {
             //ProductTest1();
             Console.WriteLine("-------------------------------------");
-            //ProductTest2();
+            CRUDOperationsTest();
             Console.WriteLine("-------------------------------------");
-            //ProductTest3();
-            Console.WriteLine("-------------------------------------");
-            //WorkerTest1();
-            Console.WriteLine("-------------------------------------");
-            //CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
-
-            //foreach (var category in categoryManager.GetAll())
-            //{
-            //    Console.WriteLine(category.CategoryId + " " + category.CategoryName);
-            //}
-
-            //ProductManager yeni = new ProductManager(new EfProductDal());
-            //var result2 = yeni.GetAllByCategoryId(3);
-            //foreach (var item in result2)
-            //{
-
-            //}
-
+            
         }
 
-     
-
-        private static void ProductTest3()
+        private static void ProductTest1()
         {
-            ProductManager productManager3 = new ProductManager(new EfProductDal());
-            var result = productManager3.GetProductDetails();
-            if (result.Success==true)
+            ProductManager productManager = new ProductManager(new EfProductDal());
+            var data = productManager.GetAll();
+            foreach (var item in data.Data)
             {
-                foreach (var product in result.Data)
-                {
-                    Console.WriteLine(product.ProductName + "/" + product.CategoryName);
-                }
-            }
-            else
-            {
-                Console.WriteLine(result.Message);
+                Console.WriteLine(item.ProductId + " " + item.ProductName);
             }
         }
 
-        //private static void ProductTest2()
-        //{
-        //    ProductManager productManager2 = new ProductManager(new EfProductDal());
-        //    foreach (var product in productManager2.GetAllByCategoryId(2))
-        //    {
-        //        Console.WriteLine(product.ProductName + " " + product.CategoryId);
-        //    }
-        //}
+        private static void CRUDOperationsTest()
+        {
+            //Notlar:
+            //1: Veritabanı ıd numaralarını kendisi atıyor, biz elle vermeye kalkısırsak hata verir.
+            //2: Delete ve Update operasyonunda işlem yapılack kaydın bütün parametreleri doğru girilmelidir. Updatede degisecek kısımları farklı girip, diğer kısımları da eskisi gibi girmek
+            //gerekiyor
 
-        //private static void ProductTest1()
-        //{
-        //    ProductManager productManager = new ProductManager(new EfProductDal());
-        //    foreach (var product in productManager.GetAll())
-        //    {
-        //        Console.WriteLine(product.ProductName);
-        //    }
-        //}
+            ProductManager productManager1 = new ProductManager(new EfProductDal());
+            //var message = productManager1.Add(new Product { CategoryId = 3, ProductName = "Mehtap", UnitPrice = 999, UnitsInStock = 1 });
+            //Console.WriteLine(message.Message);
+            ///var message2 = productManager1.Delete(new Product { ProductId=84 ,CategoryId = 3, ProductName = "Mehtap", UnitPrice = 999, UnitsInStock = 1 });
+            //Console.WriteLine(message2.Message);
+            var message3 = productManager1.Update(new Product { ProductId = 86, CategoryId = 3, ProductName = "Kaplan", UnitPrice = 999, UnitsInStock = 1 });
+            Console.WriteLine(message3.Message);
+        }
+
     }
 }

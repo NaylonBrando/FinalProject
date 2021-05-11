@@ -37,6 +37,32 @@ namespace Business.Concrate
             _productDal.Add(product);
             return new SuccessResult(Messages.ProductAdded); //Interface'nin kendisini implemente eden sınıfların referansını tutması.
         }
+        public IResult Delete(Product product)
+        {
+            var check = _productDal.Get(p => p.ProductName == product.ProductName); //not: tabloda aynı isimli product varsa hata verir
+            if (check!=null)
+            {
+                _productDal.Delete(product);
+                return new SuccessResult("Ürün Silindi");
+            }
+            return new SuccessResult("Böyle isimde ürün yok! ");
+
+
+        }
+        public IResult Update(Product product)
+        {
+            var check = _productDal.Get(p => p.ProductName == product.ProductName);
+            var check2 = _productDal.Get(p => p.ProductId == product.ProductId);
+            if (check != null || check2 !=null)
+            {
+                _productDal.Update(product);
+                return new SuccessResult("Ürün Güncellendi!");
+            }
+            return new SuccessResult("Böyle isimde ürün yok! ");
+
+
+        }
+
 
         public IDataResult<List<Product>> GetAll() //Hem product list hem bool hem de mesaj döndürüyor
         {                                          //İç içe list yapısı varmış
@@ -56,7 +82,7 @@ namespace Business.Concrate
         }
         public IDataResult<List<Product>> GetAllByCategoryId(int id)
         {
-            return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.CategoryId == id));
+            return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.CategoryId == id)); //filtreleme businesste yapılır. Çay Erdal bakkalda içilir
         }
 
         public IDataResult<Product> GetById(int id)
