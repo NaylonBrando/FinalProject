@@ -25,14 +25,39 @@ namespace WebAPI.Controllers
         {
             _productService = productService;
         }
-        [HttpGet]
-        public List<Product> Get()
+        [HttpGet("getall")] //getall alliance verdik. sql gibi isim ekleme
+        public IActionResult Get()
         {
             //Depency chain
-            
             var result = _productService.GetAll(); //Get IDataResult döndürür
-            return result.Data; //Gelistirme ekibine bu datayı veriyoruz o da mobil geliştirmeye itereit ediyor.
+            if (result.Success==true)
+            {
+                return Ok(result); //ok--> http statu kodu 200 //Gelistirme ekibine bu datayı veriyoruz o da mobil geliştirmeye itereit ediyor.
+            }
+            return BadRequest(result); //http statü bad request 400
         }
+
+        [HttpPost("add")]
+        public IActionResult Post(Product product)
+        {
+            var result = _productService.Add(product); //Veriyi postmandan alıyoruz. postman/post
+            if (result.Success==true)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("getbyid")]
+        public IActionResult GetById(int productId)
+        {
+            var result = _productService.GetById(productId);
+            if (result.Success==true)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
     }
         //return new List<Product>
         //{

@@ -68,7 +68,7 @@ namespace Business.Concrate
         {                                          //İç içe list yapısı varmış
             //İs kodları
             //Yetkisi var mi?
-            if (DateTime.Now.Hour == 22)
+            if (DateTime.Now.Hour == 21)
             {
                 return new ErrorDataResult<List<Product>>(Messages.MaintanceTime);
                 //Peki data null oldugu halde niye ürün listesini döndürdüm.
