@@ -1,3 +1,6 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Business.DepencyResolvers.Autofac;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -15,9 +18,16 @@ namespace WebAPI
         {
             CreateHostBuilder(args).Build().Run();
         }
-
+        //Burdaki mevzu biz varolan .net core altypasýndanki ýoc yapýsýný kullanmak yerime
+        //yeni ýoc altyapýsý kullan
+        //.net core container yerine baþka bir ýoc container kullanmak için yazdýk
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureContainer<ContainerBuilder>(builder =>
+                {
+                    builder.RegisterModule(new AutofacBussinesModule()); //yeni addsingleton AutofacBussinesModule'de 
+                }) 
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

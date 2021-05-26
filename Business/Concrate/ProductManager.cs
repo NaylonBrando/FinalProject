@@ -1,9 +1,13 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcers.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrate;
 using Entities.DTOs;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 
@@ -22,6 +26,8 @@ namespace Business.Concrate
             _productDal = productDal;
         }
 
+        //Yeni, attribute ile kurulan validator
+        [ValidationAspect(typeof(ProductValidator))] //add metodunu productvalidator'daki kurallara göre doğrula
         public IResult Add(Product product) //IResult kendisini implement eden Result' döndürür
         {
             //İs kodları
@@ -29,11 +35,11 @@ namespace Business.Concrate
             //İşlem gerçekleşti veya gerçekleşmedi ise ben ona göre ekledim veya eklemedim diyeyim.
             //Result metodlari ile crud operasyonlarının tek şey döndürmesinden bağımsız birden fazla değerler
             //döndürürür resutlar sayesinde.
-            if (product.ProductName.Length < 2)
-            {
-                //Magic strings
-                return new ErrorResult(Messages.ProductNameInvalid);
-            }
+
+            //Eski, direkt sınıf ile kurulan validator
+            //validation -----> minimum kaç karakter, hangi karakterler gibi doğrulama 
+            //ValidationTool.Validate(new ProductValidator(), product);
+            
             _productDal.Add(product);
             return new SuccessResult(Messages.ProductAdded); //Interface'nin kendisini implemente eden sınıfların referansını tutması.
         }
