@@ -1,9 +1,7 @@
 ﻿using Castle.DynamicProxy;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Core.Utilities.Interceptors
 {
@@ -14,12 +12,12 @@ namespace Core.Utilities.Interceptors
         public IInterceptor[] SelectInterceptors(Type type, MethodInfo method, IInterceptor[] interceptors)
         {
             var classAttributes = type.GetCustomAttributes<MethodInterceptionBaseAttribute>
-                (true).ToList();
+                (true).ToList(); //git classin attributelerini oku
             var methodAttributes = type.GetMethod(method.Name)
-                .GetCustomAttributes<MethodInterceptionBaseAttribute>(true);
+                .GetCustomAttributes<MethodInterceptionBaseAttribute>(true);//git ilgili metodun attributelerini oku
             classAttributes.AddRange(methodAttributes);
 
-            return classAttributes.OrderBy(x => x.Priority).ToArray();
+            return classAttributes.OrderBy(x => x.Priority).ToArray(); //onları listeye koy, önceliklere göre sırala
         }
     }
 }

@@ -6,15 +6,12 @@ using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
 using DataAccess.Abstract;
 using DataAccess.Concrate.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Business.DepencyResolvers.Autofac
 {
     //Peki bu ne işe yarayacak ?
     //startupdaki singletonları yapmayı sağlar
-    public class AutofacBussinesModule:Module//Autofac modülünü seçin, system reflection değil
+    public class AutofacBussinesModule : Module//Autofac modülünü seçin, system reflection değil
     {
         //uygulama çalıştıgı zaman load çalısacak
         //autofac singleton disinda interceptor sağlıyor
@@ -22,11 +19,15 @@ namespace Business.DepencyResolvers.Autofac
         {
             //bu addsingleton'a karsılık gelir
             //birisi senden IProductService isterse ProductManager'ver
-            builder.RegisterType<ProductManager>().As<IProductService>().SingleInstance();
             //SingleInstance, her şey için tek bir instance oluşturur.Dikkat: referans adresi her şey için aynıdır
             //data taşımamalı
 
+            builder.RegisterType<ProductManager>().As<IProductService>().SingleInstance();
             builder.RegisterType<EfProductDal>().As<IProductDal>().SingleInstance();
+
+            builder.RegisterType<CategoryManager>().As<ICategoryService>().SingleInstance();
+            builder.RegisterType<EfCategoryDal>().As<ICategoryDal>().SingleInstance();
+
 
 
             //calisan uygulama içerisinde implemente edilen interfaceleri bul
@@ -39,8 +40,6 @@ namespace Business.DepencyResolvers.Autofac
                 {
                     Selector = new AspectInterceptorSelector()
                 }).SingleInstance();
-
-
         }
     }
 }

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Core.DataAccess
 {
@@ -22,7 +21,7 @@ namespace Core.DataAccess
 
     //3:
     //Bütün projelerde kullanabilmek için Core katmanına taşıdık. Artık evrensel bir şablon
-    //Artık herhangi bir proje nesneleri için lazım olan şablon interfaceleri buradan şablon alabilir 
+    //Artık herhangi bir proje nesneleri için lazım olan şablon interfaceleri buradan şablon alabilir
 
     //4:
     //Core katmanı, diğer katmanları referans almaz! Alırsa diğer katmanlara bağımlısındır. Hatta Diğer projelere

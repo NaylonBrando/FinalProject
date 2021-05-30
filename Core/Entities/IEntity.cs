@@ -5,6 +5,5 @@
     //Core katmanına eklememizin nedeni budur
     public interface IEntity
     {
-
     }
 }

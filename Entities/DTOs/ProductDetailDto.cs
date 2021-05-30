@@ -1,8 +1,4 @@
-﻿using Core;
-using Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Core.Entities;
 
 namespace Entities.DTOs
 {
@@ -12,12 +8,11 @@ namespace Entities.DTOs
     //dto adında bir nesne oluşturup istedigimiz sütun alanlarını o classa yazdıktan çekecegimiz yerde linq ile inner join
     //yapıp veriyi getiriyoruz
 
-    public class ProductDetailDto:IDto
+    public class ProductDetailDto : IDto
     {
         public int ProductId { get; set; }
         public string ProductName { get; set; }
         public string CategoryName { get; set; }
         public short UnıtsInStock { get; set; }
-
     }
 }

@@ -1,9 +1,10 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrate;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Business.Concrate
 {
@@ -18,24 +19,26 @@ namespace Business.Concrate
             _categoryDal = categoryDal;
         }
 
-        public List<Category> GetAll()
+        public IDataResult<List<Category>> GetAll()
         {
             //İş kodları
-            return _categoryDal.GetAll();
-            
+            return new SuccessDataResult<List<Category>>(_categoryDal.GetAll());
         }
-
-        public List<Category> GetById(int categoryId)
+        //select * from Categories where categoryId = 3
+        public IDataResult<Category> GetById(int categoryId)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<Category>(_categoryDal.Get(c => c.CategoryId == categoryId));
         }
 
+        private IResult CheckIfCategoryLimitExceded() //İş kurali PARCACİGİ oldugu için private.
+        {
+            var result = _categoryDal.GetAll().Count;
+            if (result >= 15)
+            {
+                return new ErrorResult("Maximum kategori liniti asildi!");
+            }
+            return new SuccessResult();
+        }
 
-
-        //public List<Category> GetById(int categoryId)
-        //{
-        //    //select * from Categories where categoryId = 3
-        //    return _categoryDal.Get(c => c.CategoryId == categoryId);
-        //}
     }
 }

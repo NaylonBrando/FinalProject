@@ -1,7 +1,4 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Core.CrossCuttingConcers.Validation
 {
@@ -9,11 +6,14 @@ namespace Core.CrossCuttingConcers.Validation
     {
         public static void Validate(IValidator validator, object entity) //IValidator interfacesi fluentvalidatorda hazır gelmiş
         {
+            //object seçmemizin sebebi belki entity olur belki dto olur
+
             //IValidator kendi kodladıgımız validatoruun referansını tutar
             //Ee ? biz ProductValidator'a IValidator inherit etmedik ??
             //ProductValidator'a inherit edilen AbstractValidator IValidator'a implement edilmiş
             //oradan kalitim alinmis
-            var context = new ValidationContext<object>(entity);
+            //AbstractValidator, fluentvalidator hazır kütüphanesinden gelen bir sinif
+            var context = new ValidationContext<object>(entity); //hazır sınıf ValidationContext
             var result = validator.Validate(context);
             if (!result.IsValid)
             {

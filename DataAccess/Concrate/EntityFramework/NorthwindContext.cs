@@ -8,7 +8,7 @@ namespace DataAccess.Concrate.EntityFramework
     {
         //Bu metod projenin hangi veritabani ile ilişkilendirecegimiz yer
         //Product nesnemi veritabanindaki Products ile bağla
-        //Peki neden tablo sütun isimlerini belirtmedik ? Onları nesnemizin özelliklerinin 
+        //Peki neden tablo sütun isimlerini belirtmedik ? Onları nesnemizin özelliklerinin
         //isimlerini tablo sütun isimleriyle aynı yaparak entitiyframework ile hallettik.
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -17,8 +17,10 @@ namespace DataAccess.Concrate.EntityFramework
 
         //Nesneleri birbirine karşlılık getiriyoruz
         public DbSet<Product> Products { get; set; }
+
         public DbSet<Category> Categories { get; set; }
         public DbSet<Customer> Customers { get; set; }
+
         //public DbSet<Worker> Workers { get; set; }
         public DbSet<Order> Orders { get; set; }
 
@@ -32,9 +34,6 @@ namespace DataAccess.Concrate.EntityFramework
             modelBuilder.Entity<Worker>().Property(p => p.Id).HasColumnName("EmployeeID");
             modelBuilder.Entity<Worker>().Property(p => p.Name).HasColumnName("FirstName");
             modelBuilder.Entity<Worker>().Property(p => p.Surname).HasColumnName("LastName");
-
         }
-
-        
     }
 }
