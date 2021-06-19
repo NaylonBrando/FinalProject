@@ -1,4 +1,5 @@
-﻿using Entities.Concrate;
+﻿using Core.Entities.Concrate;
+using Entities.Concrate;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrate.EntityFramework
@@ -23,6 +24,9 @@ namespace DataAccess.Concrate.EntityFramework
 
         //public DbSet<Worker> Workers { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OperationClaim> OperationClaims { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
 
         //Custom Mapping
         //Yukarıdaki gibi nesnelerimizi veritabanı tablolarına karsılık getirirken, veritabanı tablo ve alan adlarına dikkat ediyoruz.

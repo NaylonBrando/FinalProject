@@ -1,5 +1,8 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -29,6 +32,10 @@ namespace Business.Concrate
         //Kullanmamizin nedeni cache, loglama vs için bir sürü kod yazmak yerine aop'nin attributesini kullaniyoruz
         //[ValidationAspect(typeof(ProductValidator))] //add metodunu productvalidator'daki kurallara göre doğrula
         //ValidationAspect çok içe içe implemente edilen classların dibinden(Attribute) attribute yeteneği almıştır
+        
+        //Claim
+        [SecuredOperation("product.add, admin")]
+        [ValidationAspect(typeof(ProductValidator))]
         public IResult Add(Product product) //IResult kendisini implement eden Result' döndürür
         {
             //İs kodları
@@ -44,6 +51,7 @@ namespace Business.Concrate
 
             _productDal.Add(product);
             return new SuccessResult(Messages.ProductAdded);
+
 
             //Eski, direkt sınıf ile kurulan validator. ProductValidator
             //validation -----> minimum kaç karakter, hangi karakterler gibi doğrulama
@@ -61,7 +69,8 @@ namespace Business.Concrate
             }
             return new SuccessResult("Böyle isimde ürün yok! ");
         }
-
+        
+        [ValidationAspect(typeof(ProductValidator))]
         public IResult Update(Product product)
         {
             var check = _productDal.Get(p => p.ProductName == product.ProductName);
