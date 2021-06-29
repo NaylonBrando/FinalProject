@@ -14,7 +14,7 @@ namespace Business.Concrate
     public class AuthManager : IAuthService
     {
         private IUserService _userService;
-        private ITokenHelper _tokenHelper;
+        private ITokenHelper _tokenHelper; //Login  oldugunda token verilmesi icin 
 
         public AuthManager(IUserService userService, ITokenHelper tokenHelper)
         {
@@ -46,7 +46,7 @@ namespace Business.Concrate
             {
                 return new ErrorDataResult<User>(Messages.UserNotFound);
             }
-
+            //Kullanıcıdaki salt vasitasiyla girilen sifreyi hasleyip veritabanıyla kontrol edeliyor
             if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
             {
                 return new ErrorDataResult<User>(Messages.PasswordError);

@@ -10,6 +10,7 @@ namespace Core.Utilities.Security.Encryption
     {
         //1:35:00 vs ---1:43:00
         //Bu sınıf wep apinin kullanabilecegi jwt tokenlerinin olusturabilmesi icin
+        //securityKey ve algoritmayi belirledigimiz yer
         //Hashing işlemi yapacaksın, anahtar olarak bu securitykeyi kullan
         //jwt key doğrulama, hangi anahtar ve hangi algoritma
         //cridential, user cridental sisteme girmek icin kullanilan e posta ve sifre vs

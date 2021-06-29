@@ -10,10 +10,12 @@ namespace Core.Utilities.Security.Encryption
     //Basit bir stringle key olmaz --mysupersecret keyi asp.net jwt'nin anlayacagi sekle sokuyoruz
     //bunları asp.net jwt servislerinin anlayacagi sekile sokuyoruz
     //SeuciryKey'i stringle encryptiona parametre geçemeyiz, onu byte array haline getirir
+
     public class SecurityKeyHelper
     {
         public static SecurityKey CreateSecurityKey(string securityKey)
         {
+            //Encoding.UTF8.GetBytes(bir string)  <--- Bu metod string ifadelerin her harfini ascii koduna cevirip bir diziye aktarir bu byte[] dizisidir.
             return new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityKey));//stringi simetrik anahtara cevirdik
         }
     }

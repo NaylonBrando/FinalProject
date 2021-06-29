@@ -27,8 +27,10 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(userToLogin.Message);
             }
-
+            //Token, managerde degil burada olusturulur
+            //islem basariliysa user bilgilerini parametre olarak al
             var result = _authService.CreateAccessToken(userToLogin.Data);
+            //token verme islemi de basariliysa resultu döndür
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -45,9 +47,10 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(userExists.Message);
             }
-
+            //Kullanici yoksa authmanagere yolla.
             var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
             var result = _authService.CreateAccessToken(registerResult.Data);
+            //token verme islemi de basariliysa resultu döndür
             if (result.Success)
             {
                 return Ok(result.Data);

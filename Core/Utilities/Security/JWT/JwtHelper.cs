@@ -26,17 +26,20 @@ namespace Core.Utilities.Security.JWT
             //TokenOptions(sınıf)'nı, TokenOptions(jsondaki kod blogu)'ndaki seylere esitle
             
         }
+        //securitykey, şifreli tokeni oluştururken gerekli olan anahtar.
         public AccessToken CreateToken(User user, List<OperationClaim> operationClaims)
         {
             _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
             var securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);//Olustururken securitykeye ihtiyac var, helperden yardım alarak olusturuyoruz
             var signingCredentials = SigningCredentialsHelper.CreateSigningCredantials(securityKey);//byte security key için hangi algoirtmayı vs kullanacak ve anahtar nedir
             
-            var jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredentials, operationClaims);//İlgili kullanıcı için yetkileri içeren metod
+            //JWT token üretecek kod
+            var jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredentials, operationClaims);
+            //Tokenin yazdırılması
             var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
-            var token = jwtSecurityTokenHandler.WriteToken(jwt);
+            var token = jwtSecurityTokenHandler.WriteToken(jwt);//Token nesnemizi stringe çeviren kod
 
-            return new AccessToken
+            return new AccessToken//Tokenin döndğrğlmesi
             {
                 Token = token,
                 Expiration = _accessTokenExpiration
@@ -51,12 +54,13 @@ namespace Core.Utilities.Security.JWT
                 issuer: tokenOptions.Issuer,
                 audience: tokenOptions.Audience,
                 expires: _accessTokenExpiration,
-                notBefore: DateTime.Now,
-                claims: SetClaims(user, operationClaims),
+                notBefore: DateTime.Now,//Eğer token exp bilgisi şuandan önceyse gecerli degil
+                claims: SetClaims(user, operationClaims),//alttaki kod blogunda claimleri set ediyoruz
                 signingCredentials: signingCredentials //signingCredentials using System.IdentityModel.Tokens.Jwt'den gelir
             );
             return jwt;
         }
+        //Token olusturacagiz ama bize claim bilgisi lazım onu buradan hallediyoruz
         //ıenub, listin basesidir
         //yetkiden daha fazlasidir
         private IEnumerable<Claim> SetClaims(User user, List<OperationClaim> operationClaims) //claimleri olustururken kullandıgımız yardımcı metod

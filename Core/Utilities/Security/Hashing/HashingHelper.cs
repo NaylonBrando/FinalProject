@@ -11,8 +11,12 @@ namespace Core.Utilities.Security.Hashing
         {
             using (var hmac = new System.Security.Cryptography.HMACSHA512())//Haslemek için .net kriptografi sınıfından yararlaniyoruz
             {
-                passwordSalt = hmac.Key;//tuz olarak algnin key degerini kullaniyoruz. her kullanici icin yeni key
-                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));//password'u stringden bytearray yapmak icin bu dönüstürmeyi parametre olarak kullandık
+                //Salt olarak algnin key degerini kullaniyoruz. her kullanici icin yeni key
+                passwordSalt = hmac.Key;
+                //İlk olarak password'u stringden bytearray yapmak icin bu dönüstürmeyi kullandık
+                //bytre[] formunda stringin her harfi ascii tablosundaki sayi karsıligina cevrildi
+                //İkinci olarak HMACSHA512 sınıfınından türetilen nesne için verilen key değerine göre hash olusturuldu
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
         }
 

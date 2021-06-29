@@ -5,6 +5,7 @@ using Entities.DTOs;
 
 namespace Business.Abstract
 {
+    //Sisteme register ve login işleminin yapılacagi servis
     public interface IAuthService
     {
         IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password);

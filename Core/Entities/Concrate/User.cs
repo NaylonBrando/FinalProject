@@ -5,9 +5,8 @@ using System.Text;
 namespace Core.Entities.Concrate
 {
     //Peki user, operationclaims, useroperationclams neden Core katmanında?
-    //Çünkü JWT Core katmanında. Jwt sınıfları parametre olarak user sınıfı falan kullanıyor.
-    //referans aldıgı için bu sefer core katmanı entities katmanına referans olur
-
+    //Çünkü Jwt sınıfları parametre olarak User sınıfını falan kullanıyor.
+    //User vs Entities katmanında durursa bu sefer Core katmani Entities katmanına bagimli olur
     public class User:IEntity
     {
         public int Id { get; set; }

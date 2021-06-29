@@ -1,3 +1,4 @@
+using Core.Utilities.IoC;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.JWT;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -39,12 +40,14 @@ namespace WebAPI
 
             //Bu sistemde aut. olarak jwt kullanýcagini belirttigimiz kodlar
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
-
+            //Bir nevi sisteme giris icin anahtar
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
+                        //Bunlar kullanýcýya veridigimiz tokenin issuer olarak erhan@er.. veriyoruz
+                        //Sonra onlarý kontrol ediyoruz
                         ValidateIssuer = true,
                         ValidateAudience = true,
                         ValidateLifetime = true,
@@ -54,6 +57,7 @@ namespace WebAPI
                         IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                     };
                 });
+            ServiceTool.Create(services);
 
 
         }
