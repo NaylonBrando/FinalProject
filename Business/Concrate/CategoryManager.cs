@@ -18,7 +18,6 @@ namespace Business.Concrate
         {
             _categoryDal = categoryDal;
         }
-
         public IDataResult<List<Category>> GetAll()
         {
             //İş kodları

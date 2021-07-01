@@ -12,6 +12,7 @@ namespace Business.DepencyResolvers.Autofac
 {
     //Peki bu ne işe yarayacak ?
     //startupdaki singletonları yapmayı sağlar
+    //Buradaki bağımlilik cözücü finalprojecte özeldir 
     public class AutofacBussinesModule : Module//Autofac modülünü seçin, system reflection değil
     {
         //uygulama çalıştıgı zaman load çalısacak

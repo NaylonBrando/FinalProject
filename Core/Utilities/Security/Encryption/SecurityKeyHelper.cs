@@ -8,8 +8,7 @@ namespace Core.Utilities.Security.Encryption
     //İsin icerisinde sifreleme olan sistemlerde her seyin byte array formatında vermemiz gerek
     //appsettins jsondaki securitykey
     //Basit bir stringle key olmaz --mysupersecret keyi asp.net jwt'nin anlayacagi sekle sokuyoruz
-    //bunları asp.net jwt servislerinin anlayacagi sekile sokuyoruz
-    //SeuciryKey'i stringle encryptiona parametre geçemeyiz, onu byte array haline getirir
+    //SeuciryKey'i stringle encryptiona parametre geçemeyiz, onu byte array haline getirip encryptiona geçirmeliyiz
 
     public class SecurityKeyHelper
     {

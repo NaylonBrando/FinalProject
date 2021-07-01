@@ -1,9 +1,12 @@
+using Core.DepencyResolvers;
+using Core.Extensions;
 using Core.Utilities.IoC;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.JWT;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -37,6 +40,11 @@ namespace WebAPI
             //Autofac, ninject, castlewindsor, structure map, lightinject, dryinject ---> IoC container
             // .net'in containerini býrakýp, Autofac containere geçtik
 
+  
+            //Biri senden IHttpContextAccessor isterse ona HttpContextAccessor'u ver
+            //clientin isteðinden yanýtýna kadar süreçin takibini yapar
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 
             //Bu sistemde aut. olarak jwt kullanýcagini belirttigimiz kodlar
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
@@ -57,7 +65,9 @@ namespace WebAPI
                         IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                     };
                 });
-            ServiceTool.Create(services);
+            //Bu metod farkli modülleri startupa eklemek icin kullanilir
+            //coremodule disinda baska moddülleride eklemek icin kullaniyoruz
+            services.AddDependencyResolvers(new ICoreModule[] {new CoreModule() });
 
 
         }
