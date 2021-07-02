@@ -83,6 +83,7 @@ namespace Business.Concrate
             return new SuccessResult("Böyle isimde ürün yok! ");
         }
 
+        [CacheAspect] //key(cache verilen isim), value
         public IDataResult<List<Product>> GetAll() //Hem product list hem bool hem de mesaj döndürüyor
         {                                          //İç içe list yapısı varmış
             //İs kodları
