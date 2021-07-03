@@ -6,6 +6,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Core.DepencyResolvers
@@ -21,10 +22,10 @@ namespace Core.DepencyResolvers
         public void Load(IServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            
             //Alltaki cözücü ileride baska memorycache manager kullanirsak hemen cözümleyelim diye
             serviceCollection.AddSingleton<ICacheManager, MemoryCacheManager>();
             serviceCollection.AddMemoryCache();//Core.CrossCuttingConcers.Caching.Microsoft'teki IMemorCache için çözücü. hazir bir cözücü
+            serviceCollection.AddSingleton<Stopwatch>();
 
         }
     }

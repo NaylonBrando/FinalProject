@@ -2,6 +2,9 @@
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -10,6 +13,7 @@ using Entities.Concrate;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Business.Concrate
 {
@@ -36,6 +40,7 @@ namespace Business.Concrate
         //Claim
         [SecuredOperation("product.add, admin")]
         [ValidationAspect(typeof(ProductValidator))]
+        [CacheRemoveAspect("IProductService.Get")]
         public IResult Add(Product product) //IResult kendisini implement eden Result' döndürür
         {
             //İs kodları
@@ -71,6 +76,7 @@ namespace Business.Concrate
         }
         
         [ValidationAspect(typeof(ProductValidator))]
+        [CacheRemoveAspect("IProductService.Get")]//bellekteki tüm IProductService.Get'leri sil
         public IResult Update(Product product)
         {
             var check = _productDal.Get(p => p.ProductName == product.ProductName);
@@ -82,19 +88,18 @@ namespace Business.Concrate
             }
             return new SuccessResult("Böyle isimde ürün yok! ");
         }
-
+        [PerformanceAspect(5)]
         [CacheAspect] //key(cache verilen isim), value
         public IDataResult<List<Product>> GetAll() //Hem product list hem bool hem de mesaj döndürüyor
         {                                          //İç içe list yapısı varmış
-            //İs kodları
-            //Yetkisi var mi?
-            if (DateTime.Now.Hour == 21)
-            {
-                return new ErrorDataResult<List<Product>>(Messages.MaintanceTime);
-                //Peki data null oldugu halde niye ürün listesini döndürdüm.
-                //Çünkü front endçi bunu ona göre karşılıyacak, kodlarını ona göre yazacak.
-            }
-
+            ////İs kodları
+            ////Yetkisi var mi?
+            //if (DateTime.Now.Hour == 21)
+            //{
+            //    return new ErrorDataResult<List<Product>>(Messages.MaintanceTime);
+            //    //Peki data null oldugu halde niye ürün listesini döndürdüm.
+            //    //Çünkü front endçi bunu ona göre karşılıyacak, kodlarını ona göre yazacak.
+            //}
             return new SuccessDataResult<List<Product>>(_productDal.GetAll(), Messages.ProductListed);
         }
 
@@ -102,7 +107,7 @@ namespace Business.Concrate
         {
             return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.CategoryId == id)); //filtreleme businesste yapılır. Çay Erdal bakkalda içilir
         }
-
+        [CacheAspect]
         public IDataResult<Product> GetById(int id)
         {
             return new SuccessDataResult<Product>(_productDal.Get(p => p.ProductId == id));
@@ -147,6 +152,11 @@ namespace Business.Concrate
                 return new ErrorResult(Messages.CategoryLimitExceed);
             }
             return new SuccessResult();
+        }
+        //[TransactionScopeAspect]
+        public IResult AddTransactionalTest(Product product)
+        {
+            throw new NotImplementedException();
         }
     }
 }
