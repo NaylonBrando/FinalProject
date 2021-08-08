@@ -38,7 +38,7 @@ namespace Business.Concrate
         //ValidationAspect çok içe içe implemente edilen classların dibinden(Attribute) attribute yeteneği almıştır
         
         //Claim
-        [SecuredOperation("product.add, admin")]
+        //[SecuredOperation("product.add, admin")]
         [ValidationAspect(typeof(ProductValidator))]
         [CacheRemoveAspect("IProductService.Get")]
         public IResult Add(Product product) //IResult kendisini implement eden Result' döndürür

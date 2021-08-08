@@ -67,9 +67,9 @@ namespace WebAPI
                 });
             //Bu metod farkli modülleri startupa eklemek icin kullanilir
             //coremodule disinda baska moddülleride eklemek icin kullaniyoruz
-            services.AddDependencyResolvers(new ICoreModule[] {new CoreModule() });
+            services.AddDependencyResolvers(new ICoreModule[] {new CoreModule() }); //IServiceCollection'u this ile AddDependencyResolvers'u ekleyerek genislettik
 
-
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,6 +80,8 @@ namespace WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            //localhost.. gelen adresten ne get, post istek gelirse ver
+            app.UseCors(builder=>builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
 
             app.UseHttpsRedirection();
 

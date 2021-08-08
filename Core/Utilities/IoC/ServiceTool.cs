@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Core.Utilities.IoC
 {
-    //bu sınıf bizim wep api veya autofacteki injectionlari olustuturmaya yarar
+    //bu sınıf bizim wep api veya autofacteki injectionlari olusturmaya yarar
     //istediginiz herhangi bir interfacenin servisini bu tool ile alabilirsiiz
     //Ioc
     public static class ServiceTool

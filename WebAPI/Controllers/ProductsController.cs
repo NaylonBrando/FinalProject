@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Entities.Concrate;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading;
 
 namespace WebAPI.Controllers
 {
@@ -52,6 +53,18 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+        [HttpGet("getbycategory")]
+        public IActionResult GetByCategoty(int categoryId)
+        {
+            var result = _productService.GetAllByCategoryId(categoryId);
+            if (result.Success == true)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
     }
 
     //return new List<Product>

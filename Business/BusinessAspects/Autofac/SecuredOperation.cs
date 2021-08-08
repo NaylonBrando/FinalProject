@@ -28,6 +28,7 @@ namespace Business.BusinessAspects.Autofac
         protected override void OnBefore(IInvocation invocation)//Metodun önünde calistir
         {
             var roleClaims = _httpContextAccessor.HttpContext.User.ClaimRoles(); //O anki kullanıcının rollerini getir
+            //_httpContextAccessor.HttpContext.User.
             //Rolleri gezerken ilgili rol varsa return et
             foreach (var role in _roles)
             {

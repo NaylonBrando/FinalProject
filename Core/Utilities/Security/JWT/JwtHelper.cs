@@ -1,6 +1,8 @@
 ﻿using Core.Entities.Concrate;
 using Core.Extensions;
+using Core.Utilities.IoC;
 using Core.Utilities.Security.Encryption;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -9,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Core.Utilities.Security.JWT
 {
@@ -32,7 +35,6 @@ namespace Core.Utilities.Security.JWT
             _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
             var securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);//Olustururken securitykeye ihtiyac var, helperden yardım alarak olusturuyoruz
             var signingCredentials = SigningCredentialsHelper.CreateSigningCredantials(securityKey);//byte security key için hangi algoirtmayı vs kullanacak ve anahtar nedir
-            
             //JWT token üretecek kod
             var jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredentials, operationClaims);
             //Tokenin yazdırılması
